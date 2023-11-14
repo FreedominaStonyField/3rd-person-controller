@@ -35,7 +35,7 @@ func _input(event):
 		rotate_y(deg_to_rad(event.relative.x * look_horazontal_sensitivety))
 		visuals.rotate_y(deg_to_rad(-event.relative.x * look_horazontal_sensitivety))
 		
-		camera_rig.rotate_x(deg_to_rad(-event.relative.y * look_vertical_sensitivety))
+		camera_rig.rotate_x(deg_to_rad(event.relative.y * look_vertical_sensitivety))
 
 func _physics_process(delta):
 	
