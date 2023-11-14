@@ -2,6 +2,8 @@ extends CharacterBody3D
 
 @export var animation_player:AnimationPlayer
 @export var camera_rig:Node3D
+@export var max_step_height:float = floor_snap_length + .1
+@export var invert_mouse:bool = true
 @export var walk_animation: String
 @export var run_animation: String
 @export var idle_animation: String
@@ -22,8 +24,6 @@ var running: bool
 var is_locked:bool
 const JUMP_VELOCITY = 4.5
 
-
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -32,10 +32,14 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		rotate_y(deg_to_rad(event.relative.x * look_horazontal_sensitivety))
-		visuals.rotate_y(deg_to_rad(-event.relative.x * look_horazontal_sensitivety))
-		
-		camera_rig.rotate_x(deg_to_rad(event.relative.y * look_vertical_sensitivety))
+		if invert_mouse:
+			rotate_y(deg_to_rad(event.relative.x * look_horazontal_sensitivety))
+			visuals.rotate_y(deg_to_rad(-event.relative.x * look_horazontal_sensitivety))
+			camera_rig.rotate_x(deg_to_rad(-event.relative.y * look_vertical_sensitivety))
+		else:
+			rotate_y(deg_to_rad(-event.relative.x * look_horazontal_sensitivety))
+			visuals.rotate_y(deg_to_rad(event.relative.x * look_horazontal_sensitivety))
+			camera_rig.rotate_x(deg_to_rad(event.relative.y * look_vertical_sensitivety))
 
 func _physics_process(delta):
 	
@@ -73,8 +77,11 @@ func _physics_process(delta):
 	
 	if direction:
 		if is_on_wall() and is_on_floor():
+#			set_global_position($RayCast3D.get_collision_point())
+
 			snap_to_top_of_step()
-		pass
+
+
 		# look in the direction the player is moving toward
 		if !is_locked:
 			visuals.rotation.y = lerp_angle(visuals.rotation.y, atan2(-input_dir.x, -input_dir.y),.1)
@@ -115,7 +122,4 @@ func play_footstep():
 func snap_to_top_of_step():
 	print("snap_to_top_of_step()")
 	if not $WallDetector.is_colliding():
-		position.y += 0.3
-		pass
-	
-	pass
+		position.y += max_step_height
