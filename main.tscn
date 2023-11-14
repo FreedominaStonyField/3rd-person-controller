@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://dd4ek612ssfi8"]
+
+[ext_resource type="Texture2D" uid="uid://olypf2cx6bt1" path="res://addons/kenney_prototype_textures/dark/texture_01.png" id="1_e1bn2"]
+[ext_resource type="PackedScene" uid="uid://g1g3fr4uixkk" path="res://player.tscn" id="1_lkmpj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6gdui"]
+albedo_color = Color(0.309804, 0.309804, 0.309804, 1)
+albedo_texture = ExtResource("1_e1bn2")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="Gradient" id="Gradient_rfbgh"]
+colors = PackedColorArray(0, 0, 0, 1, 0.0493754, 0.0430809, 0.0694072, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s1sej"]
+gradient = SubResource("Gradient_rfbgh")
+fill_from = Vector2(1, 0.543956)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_466nw"]
+night_sky = SubResource("GradientTexture2D_s1sej")
+
+[sub_resource type="Sky" id="Sky_m1jhp"]
+sky_material = SubResource("PhysicalSkyMaterial_466nw")
+
+[sub_resource type="Environment" id="Environment_n3vbd"]
+background_mode = 2
+sky = SubResource("Sky_m1jhp")
+tonemap_mode = 3
+glow_enabled = true
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+use_collision = true
+size = Vector3(50, 1, 50)
+material = SubResource("StandardMaterial3D_6gdui")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_lkmpj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.509015, 2.79461)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_n3vbd")
