@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dd4ek612ssfi8"]
+[gd_scene load_steps=11 format=3 uid="uid://dd4ek612ssfi8"]
 
 [ext_resource type="Texture2D" uid="uid://olypf2cx6bt1" path="res://addons/kenney_prototype_textures/dark/texture_01.png" id="1_e1bn2"]
 [ext_resource type="PackedScene" uid="uid://g1g3fr4uixkk" path="res://player.tscn" id="1_lkmpj"]
+[ext_resource type="Script" path="res://addons/linear_stairs/nodes/csg_linear_stairs.gd" id="2_1n0xu"]
+[ext_resource type="Material" uid="uid://mhjxhhk4wqkn" path="res://wall_material_3d.tres" id="3_3ic7w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6gdui"]
 albedo_color = Color(0.309804, 0.309804, 0.309804, 1)
@@ -30,18 +32,75 @@ glow_enabled = true
 
 [node name="Node3D" type="Node3D"]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="Floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 use_collision = true
 size = Vector3(50, 1, 50)
 material = SubResource("StandardMaterial3D_6gdui")
+
+[node name="CSGLinearStairs" type="CSGCombiner3D" parent="Floor"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.23558, 0.5, -8.73504)
+script = ExtResource("2_1n0xu")
+stairs_amount = 11
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
 shadow_enabled = true
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_lkmpj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.509015, 2.79461)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.12326, -8.95145)
+floor_snap_length = 0.2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_n3vbd")
+
+[node name="Wall" type="CSGBox3D" parent="."]
+transform = Transform3D(0.0270493, 0, 0.999634, 0, 1, 0, -0.999634, 0, 0.0270493, 1.19242, 0.85315, -9.2448)
+material_override = ExtResource("3_3ic7w")
+use_collision = true
+size = Vector3(1, 0.666938, 11.3501)
+
+[node name="Wall2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 2.85315, -11)
+material_override = ExtResource("3_3ic7w")
+use_collision = true
+size = Vector3(1, 6.54829, 22.3451)
+
+[node name="Wall7" type="CSGBox3D" parent="."]
+transform = Transform3D(0.785166, 0, 0.619286, 0, 1, 0, -0.619286, 0, 0.785166, -16.6402, 2.85315, 13.7166)
+material_override = ExtResource("3_3ic7w")
+use_collision = true
+size = Vector3(2.75773, 6.54829, 29.6338)
+
+[node name="Wall8" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.35752, 0, 0.933905, 0, 1, 0, -0.933905, 0, -0.35752, 9.60381, 4.83819, 19.8797)
+material_override = ExtResource("3_3ic7w")
+use_collision = true
+size = Vector3(2.75773, 10.6827, 29.6338)
+
+[node name="Wall3" type="CSGBox3D" parent="."]
+transform = Transform3D(0.48154, 0, -0.876424, 0, 1, 0, 0.876424, 0, 0.48154, -15.2048, 2.85315, -22.9496)
+material_override = ExtResource("3_3ic7w")
+use_collision = true
+size = Vector3(1, 6.54829, 16.3942)
+
+[node name="Wall4" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.148949, 0, -0.988845, 0, 1, 0, 0.988845, 0, -0.148949, 0.475005, 2.85315, -23.46)
+material_override = ExtResource("3_3ic7w")
+use_collision = true
+size = Vector3(2.67617, 6.54829, 16.3942)
+
+[node name="Wall6" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.331881, 0, -0.943321, 0, 1, 0, 0.943321, 0, -0.331881, 12.5524, 2.85315, -21.9185)
+material_override = ExtResource("3_3ic7w")
+use_collision = true
+size = Vector3(2.67617, 6.54829, 5.29143)
+
+[node name="Wall5" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.986932, 0, -0.161139, 0, 1, 0, 0.161139, 0, -0.986932, 21.8178, 2.29245, -5.72301)
+material_override = ExtResource("3_3ic7w")
+use_collision = true
+size = Vector3(2.67617, 5.10628, 33.6218)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+current = true

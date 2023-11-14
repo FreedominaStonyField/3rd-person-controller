@@ -39,6 +39,7 @@ func _input(event):
 
 func _physics_process(delta):
 	
+
 #	if !animation_player.is_playing():
 #		is_locked = false
 	
@@ -71,6 +72,9 @@ func _physics_process(delta):
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if direction:
+		if is_on_wall() and is_on_floor():
+			snap_to_top_of_step()
+		pass
 		# look in the direction the player is moving toward
 		if !is_locked:
 			visuals.rotation.y = lerp_angle(visuals.rotation.y, atan2(-input_dir.x, -input_dir.y),.1)
@@ -106,3 +110,12 @@ func play_footstep():
 	if is_on_floor():
 		footstep_aui.pitch_scale = randf_range(.8,1.2)
 		footstep_aui.play()
+
+
+func snap_to_top_of_step():
+	print("snap_to_top_of_step()")
+	if not $WallDetector.is_colliding():
+		position.y += 0.3
+		pass
+	
+	pass

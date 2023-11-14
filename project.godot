@@ -15,6 +15,6 @@ run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
 
-[rendering]
+[editor_plugins]
 
-renderer/rendering_method="mobile"
+enabled=PackedStringArray("res://addons/linear_stairs/plugin.cfg")
