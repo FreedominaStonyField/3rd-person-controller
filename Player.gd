@@ -77,8 +77,6 @@ func _physics_process(delta):
 	
 	if direction:
 		if is_on_wall() and is_on_floor():
-#			set_global_position($RayCast3D.get_collision_point())
-
 			snap_to_top_of_step()
 
 
@@ -120,6 +118,6 @@ func play_footstep():
 
 
 func snap_to_top_of_step():
-	print("snap_to_top_of_step()")
+#	print("snap_to_top_of_step()")
 	if not $WallDetector.is_colliding():
 		position.y += max_step_height

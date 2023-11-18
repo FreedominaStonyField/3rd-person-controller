@@ -1,6 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://g1g3fr4uixkk"]
+[gd_scene load_steps=9 format=3 uid="uid://g1g3fr4uixkk"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_mv38c"]
+[ext_resource type="Script" path="res://state_mashine.gd" id="2_7fc8w"]
+[ext_resource type="Script" path="res://state_class.gd" id="3_jrh55"]
+[ext_resource type="Script" path="res://Idle.gd" id="3_nmfos"]
+[ext_resource type="Script" path="res://Walk.gd" id="4_qimc1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rxakp"]
 
@@ -46,3 +50,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152239, -0.560023)
 target_position = Vector3(0, -0.345, 0)
 debug_shape_custom_color = Color(0.4, 0.0980392, 0.227451, 1)
 debug_shape_thickness = 5
+
+[node name="State_Mashine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("2_7fc8w")
+CURRENT_STATE = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State_Mashine"]
+script = ExtResource("3_nmfos")
+
+[node name="Walk" type="Node" parent="State_Mashine"]
+script = ExtResource("4_qimc1")
+
+[node name="Run" type="Node" parent="State_Mashine"]
+script = ExtResource("3_jrh55")
+
+[node name="Jump" type="Node" parent="State_Mashine"]
+script = ExtResource("3_jrh55")
+
+[node name="Fall" type="Node" parent="State_Mashine"]
+script = ExtResource("3_jrh55")

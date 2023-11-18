@@ -11,6 +11,7 @@ func _ready():
 	for child in get_children():
 		if child is State:
 			states[child.name] = child
+			child.transition.connect(on_child_transition())
 		else:
 			push_warning("State Mashine contians incompatible child node!")
 	CURRENT_STATE.enter()

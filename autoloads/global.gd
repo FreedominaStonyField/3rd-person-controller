@@ -1,3 +1,3 @@
 extends Node
 
-var player
+var player : CharacterBody3D
