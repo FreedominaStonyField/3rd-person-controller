@@ -53,7 +53,7 @@ transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
 shadow_enabled = true
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_lkmpj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.12326, -8.95145)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20055, 14.9277, -4.26563)
 
 [node name="Wall" type="CSGBox3D" parent="."]
 transform = Transform3D(0.15771, 0, 0.987486, 0, 1, 0, -0.987486, 0, 0.15771, 1.19242, -0.682968, -22.3669)
@@ -104,3 +104,5 @@ use_collision = true
 size = Vector3(2.67617, 5.10628, 33.6218)
 
 [node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.1417)
+current = true
