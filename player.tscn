@@ -1,35 +1,233 @@
-[gd_scene load_steps=9 format=3 uid="uid://g1g3fr4uixkk"]
+[gd_scene load_steps=14 format=3 uid="uid://g1g3fr4uixkk"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_mv38c"]
 [ext_resource type="Script" path="res://state_mashine.gd" id="2_7fc8w"]
-[ext_resource type="Script" path="res://state_class.gd" id="3_jrh55"]
 [ext_resource type="Script" path="res://Idle.gd" id="3_nmfos"]
 [ext_resource type="Script" path="res://Walk.gd" id="4_qimc1"]
+[ext_resource type="Script" path="res://Run.gd" id="6_0gct8"]
+[ext_resource type="Script" path="res://Jump.gd" id="7_oi50g"]
+[ext_resource type="Script" path="res://Fall.gd" id="8_nqsnf"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rxakp"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_kjeow"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_j7woj"]
+[sub_resource type="SphereMesh" id="SphereMesh_3up6d"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ohvka"]
-size = Vector3(1.3, 0.7, 1.3)
+[sub_resource type="Animation" id="Animation_kjjhv"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(0.5, 2, 0.5),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("MeshInstance3D:mesh:material:emission_energy_multiplier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:mesh:material:emission_enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("camera_rig")]
-floor_snap_length = 0.19
+[sub_resource type="Animation" id="Animation_7y7uc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:emission")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:mesh:material:emission_energy_multiplier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:mesh:material:emission_enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeshInstance3D:mesh:material:albedo_color:r")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.227451, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MeshInstance3D:mesh:material:albedo_color:g")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.32549, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MeshInstance3D:mesh:material:albedo_color:b")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.0666667, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("MeshInstance3D:mesh:material:albedo_color:a")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_y040t"]
+resource_name = "Walk"
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:albedo_color:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.156863, -0.25, 0, 0.25, 0, 0.227451, -0.25, 0, 0.25, 0, 0.156863, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:mesh:material:albedo_color:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.227451, -0.25, 0, 0.25, 0, 0.32549, -0.25, 0, 0.25, 0, 0.227451, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:mesh:material:albedo_color:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.0352941, -0.25, 0, 0.25, 0, 0.0666667, -0.25, 0, 0.25, 0, 0.0352941, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeshInstance3D:mesh:material:albedo_color:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MeshInstance3D:mesh:material:emission_enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ubm1r"]
+_data = {
+"Idle": SubResource("Animation_kjjhv"),
+"RESET": SubResource("Animation_7y7uc"),
+"Walk": SubResource("Animation_y040t")
+}
+
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("animation_player", "camera_rig")]
+floor_snap_length = 0.3
 script = ExtResource("1_mv38c")
+animation_player = NodePath("Visuals/AnimationPlayer")
 camera_rig = NodePath("SpringArm3D")
 invert_mouse = false
 look_horazontal_sensitivety = 0.05
 look_vertical_sensitivety = 0.05
-walking_speed = 2.0
+walking_speed = 5.82
 running_speed = 10.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_rxakp")
+shape = SubResource("SphereShape3D_kjeow")
 
 [node name="Visuals" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals"]
-mesh = SubResource("BoxMesh_j7woj")
+mesh = SubResource("SphereMesh_3up6d")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Visuals/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.506691, 0, 0.192864)
+polygon = PackedVector2Array(0, 0, 0.5, 1, 1, 0)
+depth = 0.36
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals"]
+libraries = {
+"": SubResource("AnimationLibrary_ubm1r")
+}
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
 spring_length = 4.0
@@ -39,18 +237,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1463, 0, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 
-[node name="WallDetector" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.147432, 0)
-enabled = false
-shape = SubResource("BoxShape3D_ohvka")
-target_position = Vector3(0, 0, 0)
-
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152239, -0.560023)
-target_position = Vector3(0, -0.345, 0)
-debug_shape_custom_color = Color(0.4, 0.0980392, 0.227451, 1)
-debug_shape_thickness = 5
-
 [node name="State_Mashine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("2_7fc8w")
 CURRENT_STATE = NodePath("Idle")
@@ -58,14 +244,16 @@ CURRENT_STATE = NodePath("Idle")
 [node name="Idle" type="Node" parent="State_Mashine"]
 script = ExtResource("3_nmfos")
 
-[node name="Walk" type="Node" parent="State_Mashine"]
+[node name="Walk" type="Node" parent="State_Mashine" node_paths=PackedStringArray("visuals")]
 script = ExtResource("4_qimc1")
+walking_speed = 5.01
+visuals = NodePath("../../Visuals")
 
 [node name="Run" type="Node" parent="State_Mashine"]
-script = ExtResource("3_jrh55")
+script = ExtResource("6_0gct8")
 
 [node name="Jump" type="Node" parent="State_Mashine"]
-script = ExtResource("3_jrh55")
+script = ExtResource("7_oi50g")
 
 [node name="Fall" type="Node" parent="State_Mashine"]
-script = ExtResource("3_jrh55")
+script = ExtResource("8_nqsnf")

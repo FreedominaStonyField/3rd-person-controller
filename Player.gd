@@ -16,7 +16,7 @@ extends CharacterBody3D
 
 @export_range(0.01, 1, 0.01) var look_horazontal_sensitivety: float 
 @export_range(0.01, 1, 0.01) var look_vertical_sensitivety: float 
-@export_range(0.01, 2, 0.01) var walking_speed: float 
+@export_range(0.01, 10, 0.01) var walking_speed: float 
 @export_range(0.02, 10, 0.01) var running_speed: float 
 
 var SPEED = 1.0
@@ -44,72 +44,74 @@ func _input(event):
 
 func _physics_process(delta):
 	
-
-#	if !animation_player.is_playing():
-#		is_locked = false
+#
+##	if !animation_player.is_playing():
+##		is_locked = false
+#
+##	if Input.is_action_just_pressed("emote"):
+##		is_locked = true
+##		if animation_player.current_animation != "t-pose":
+##			animation_player.play("t-pose")
+#
+#	# Check if running
+#	if Input.is_action_pressed("sprint"):
+#		running = true
+#		SPEED = running_speed
+#	else:
+#		running = false
+#		SPEED = walking_speed
+#
+#
+#
+#	# Add the gravity.
+#	if not is_on_floor():
+#		velocity.y -= gravity * delta
+#
+#	# Handle Jump.
+#	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+#		velocity.y = JUMP_VELOCITY
+#
+#	# Get the input direction and handle the movement/deceleration.
+#	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+#	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+#
+#	if direction:
+#		if is_on_wall() and is_on_floor():
+#			snap_to_top_of_step()
+#
+#
+#		# look in the direction the player is moving toward
+#		if !is_locked:
+#			visuals.rotation.y = lerp_angle(visuals.rotation.y, atan2(-input_dir.x, -input_dir.y),.1)
+##			visuals.look_at(position + direction)
+#		#check if running
+#			if running:
+#			# play running animation
+#				if run_animation:
+#					if animation_player.current_animation != run_animation:
+#						animation_player.play(run_animation)
+#
+#			else:
+#			# else play the walking animation
+#				if walk_animation:
+#					if animation_player.current_animation != walk_animation:
+#						animation_player.play(walk_animation)
+#
+#		# set the volicity to match the derection and multiply it to get the speed the character is moving
+#		velocity.x = direction.x * SPEED
+#		velocity.z = direction.z * SPEED
+#	else:
+#		if animation_player:
+#			if !is_locked:
+#				if animation_player.current_animation != idle_animation:
+#					animation_player.play(idle_animation)
+#
+#		velocity.x = move_toward(velocity.x, 0, SPEED)
+#		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
-#	if Input.is_action_just_pressed("emote"):
-#		is_locked = true
-#		if animation_player.current_animation != "t-pose":
-#			animation_player.play("t-pose")
-		
-	# Check if running
-	if Input.is_action_pressed("sprint"):
-		running = true
-		SPEED = running_speed
-	else:
-		running = false
-		SPEED = walking_speed
+	move_and_slide()
 	
-	
-	
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-
-	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
-	if direction:
-		if is_on_wall() and is_on_floor():
-			snap_to_top_of_step()
-
-
-		# look in the direction the player is moving toward
-		if !is_locked:
-			visuals.rotation.y = lerp_angle(visuals.rotation.y, atan2(-input_dir.x, -input_dir.y),.1)
-#			visuals.look_at(position + direction)
-		#check if running
-			if running:
-			# play running animation
-				if run_animation:
-					if animation_player.current_animation != run_animation:
-						animation_player.play(run_animation)
-			
-			else:
-			# else play the walking animation
-				if walk_animation:
-					if animation_player.current_animation != walk_animation:
-						animation_player.play(walk_animation)
-			
-		# set the volicity to match the derection and multiply it to get the speed the character is moving
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		if animation_player:
-			if !is_locked:
-				if animation_player.current_animation != idle_animation:
-					animation_player.play(idle_animation)
-			
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-	if !is_locked:
-		move_and_slide()
+	pass
 
 func play_footstep():
 	if is_on_floor():
@@ -119,5 +121,8 @@ func play_footstep():
 
 func snap_to_top_of_step():
 #	print("snap_to_top_of_step()")
-	if not $WallDetector.is_colliding():
-		position.y += max_step_height
+#	for child in $WallDetector.get_children():
+#		if child.is_colliding:
+#			print(child.get_collision_point().y)
+#		position.y += max_step_height
+	pass
